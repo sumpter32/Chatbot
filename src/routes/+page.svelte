@@ -2,15 +2,16 @@
   import ChatMessage from '$lib/components/ChatMessage.svelte'
   import type { ChatCompletionRequestMessage } from 'openai'
   import { SSE } from 'sse.js'
+  import { browser } from '@sveltejs/kit';
 
   function saveChatMessages() {
-    if (typeof window !== 'undefined') {
+    if (browser) {
       localStorage.setItem('chatMessages', JSON.stringify(chatMessages));
     }
   }
 
   function loadChatMessages() {
-    if (typeof window !== 'undefined') {
+    if (browser) {
       const loadedMessages = localStorage.getItem('chatMessages');
       return loadedMessages ? JSON.parse(loadedMessages) : [];
     } else {
@@ -41,6 +42,8 @@
 
   // ... (rest of the script)
 </script>
+
+<!-- Rest of the file (HTML and style) -->
 
 <style>
   .parent-container {
@@ -87,3 +90,4 @@
     </form>
   </div>
 </div>
+
