@@ -26,6 +26,10 @@ export const POST: RequestHandler = async ({ request }) => {
 		if (!reqMessages) {
 			throw new Error('no messages provided')
 		}
+		catch (err) {
+   		console.error(err);
+    		return json({ error: 'There was an error processing your request' }, { status: 500 });
+  		}
 
 		let tokenCount = 0
 
