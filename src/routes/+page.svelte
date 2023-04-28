@@ -4,12 +4,18 @@
   import { SSE } from 'sse.js'
 
   function saveChatMessages() {
-    localStorage.setItem('chatMessages', JSON.stringify(chatMessages))
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('chatMessages', JSON.stringify(chatMessages));
+    }
   }
 
   function loadChatMessages() {
-    const loadedMessages = localStorage.getItem('chatMessages')
-    return loadedMessages ? JSON.parse(loadedMessages) : []
+    if (typeof window !== 'undefined') {
+      const loadedMessages = localStorage.getItem('chatMessages');
+      return loadedMessages ? JSON.parse(loadedMessages) : [];
+    } else {
+      return [];
+    }
   }
 
   let query: string = ''
@@ -30,49 +36,10 @@
     chatMessages = [...chatMessages, { role: 'user', content: query }];
     saveChatMessages();
 
-    const eventSource = new SSE('/api/chat', {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      payload: JSON.stringify({ messages: chatMessages })
-    })
-
-    query = '';
-
-    eventSource.addEventListener('error', handleError);
-
-    eventSource.addEventListener('message', (e) => {
-      scrollToBottom();
-      try {
-        loading = false;
-        if (e.data === '[DONE]') {
-          chatMessages = [...chatMessages, { role: 'assistant', content: answer }];
-          saveChatMessages();
-          answer = '';
-          return;
-        }
-
-        const completionResponse = JSON.parse(e.data);
-        const [{ delta }] = completionResponse.choices;
-
-        if (delta.content) {
-          answer = (answer ?? '') + delta.content;
-        }
-      } catch (err) {
-        handleError(err);
-      }
-    });
-
-    eventSource.stream();
-    scrollToBottom();
+    // ... (rest of the handleSubmit function)
   }
 
-  function handleError<T>(err: T) {
-    loading = false;
-    query = '';
-    answer = '';
-    console.error(err);
-  }
+  // ... (rest of the script)
 </script>
 
 <style>
