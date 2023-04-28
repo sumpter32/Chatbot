@@ -82,8 +82,8 @@ export const POST: RequestHandler = async ({ request }) => {
 		})
 
 		if (!chatResponse.ok) {
-			const err = await chatResponse.json()
-			throw new Error(err)
+			console.error('Error:', err.message);
+                        console.error('Stack trace:', err.stack);
 		}
 
 		return new Response(chatResponse.body, {
