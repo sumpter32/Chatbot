@@ -9,7 +9,7 @@
       localStorage.setItem('chatMessages', JSON.stringify(chatMessages));
     }
   }
-
+	
   function loadChatMessages() {
     if (typeof window !== 'undefined') {
       const loadedMessages = localStorage.getItem('chatMessages');
