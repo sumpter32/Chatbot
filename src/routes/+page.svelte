@@ -80,7 +80,7 @@
 	}
 </script>
 <script context="module">
-  import { browser } from '@sveltejs/kit';
+import { browser } from '$app/env';
 
   if (browser) {
     chatMessages = loadChatMessages();
