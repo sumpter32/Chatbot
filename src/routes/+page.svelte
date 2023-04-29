@@ -22,7 +22,7 @@
   let query: string = ''
   let answer: string = ''
   let loading: boolean = false
-  let chatMessages: ChatCompletionRequestMessage[] = []
+  export let chatMessages: ChatCompletionRequestMessage[] = []
 
   let scrollToDiv: HTMLDivElement
 
@@ -78,13 +78,6 @@
 		answer = ''
 		console.error(err)
 	}
-</script>
-<script context="module">
-import { browser } from '$app/env';
-
-  if (browser) {
-    chatMessages = loadChatMessages();
-  }
 </script>
 
 <style>
