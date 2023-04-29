@@ -55,6 +55,7 @@
 				if (e.data === '[DONE]') {
 					chatMessages = [...chatMessages, { role: 'assistant', content: answer }]
 					answer = ''
+					saveChatMessages() // Save messages after assistant response
 					return
 				}
 
@@ -70,14 +71,18 @@
 		})
 		eventSource.stream()
 		scrollToBottom()
-	}
+  }
 
-	function handleError<T>(err: T) {
-		loading = false
-		query = ''
-		answer = ''
-		console.error(err)
-	}
+  function handleError<T>(err: T) {
+    loading = false
+    query = ''
+    answer = ''
+    console.error(err)
+  }
+
+  onMount(() => {
+    chatMessages = loadChatMessages(); // load chat messages on mount
+  })
 </script>
 
 <style>
