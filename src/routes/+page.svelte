@@ -107,7 +107,7 @@
   <div class="flex flex-col w-full px-0 items-center h-full">
 	<div class="chat-container w-full bg-gray-900 rounded-md p-4 overflow-y-auto flex flex-col gap-4">
 	  <div class="flex flex-col gap-2">
-		<ChatMessage type="assistant" message="Good morrow! I am William Shakespeare, the Bard of Avon. Let us delve into the poetic beauty of language and the human experience." />
+		<ChatMessage type="assistant" message="Welcome, good gentle! Thou art about to embark on a grand adventure, penned by none other than the Bard himself, William Shakespeare. In this tale of time and tumult, thou art the hero, a time traveler from the future, tasked with averting a catastrophic event. Pray, engage with the Bard, answer his queries, and shape thy story. Forsooth, thy choices will determine the course of history. Be prepared to face time paradoxes and the consequences of altering the past. Now, let us away to our adventure!" />
 		{#each chatMessages as message}
 		  <ChatMessage type={message.role} message={message.content} />
 		{/each}
