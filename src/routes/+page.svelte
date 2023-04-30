@@ -106,20 +106,19 @@
 	  right: 0;
 	  padding: 0 env(safe-area-inset-left) 0 env(safe-area-inset-right); /* Add padding for the virtual keyboard on mobile devices */
 	}
-	.btn {
-  	  padding-left: 20px; /* set your desired left padding */
-  	  padding-right: 20px; /* set your desired right padding */
-  	}
+	 .btn {
+    padding: 5px; /* set padding all around */
+  }
 
- 	 .btn img {
-  	    width: 24px;
-   	    height: 24px;
-          }
+  .btn img {
+    width: 24px;
+    height: 24px;
+  }
   
- 	 @media (min-width: 768px) {
-  	  .btn img {
-     	   width: 48px;
-           height: 48px;
+  @media (min-width: 768px) {
+    .btn img {
+      width: 48px;
+      height: 48px;
     }
   }
 	
