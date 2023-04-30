@@ -118,11 +118,11 @@
       on:submit|preventDefault={() => handleSubmit()}
     >
       <button type="button" class="btn btn-accent" on:click={clearChat}>
-        <img src="./clear.png" alt="Clear Chat" />
+        <img src="./clear.png" />
       </button>
       <input type="text" class="input input-bordered flex-grow" bind:value={query} />
       <button type="submit" class="btn btn-accent">
-        <img src="./send.png" alt="Send" />
+        <img src="./send.png" />
       </button>
     </form>
   </div>
