@@ -100,27 +100,28 @@
 	  padding-bottom: env(safe-area-inset-bottom); /* Add padding for the virtual keyboard on mobile devices */
 	}
 	.input-area {
-	  position: fixed;
-	  bottom: 0;
-	  left: 0;
-	  right: 0;
-	  padding: 0 env(safe-area-inset-left) 0 env(safe-area-inset-right); /* Add padding for the virtual keyboard on mobile devices */
-	}
-	 .btn {
-    padding: 5px; /* set padding all around */
-  }
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0 env(safe-area-inset-left) 0 env(safe-area-inset-right);
+}
 
-  .btn img {
+.btn {
+    padding: 5px; 
+}
+
+.btn img {
     width: 24px;
     height: 24px;
-  }
-  
-  @media (min-width: 768px) {
+}
+
+@media (min-width: 768px) {
     .btn img {
-      width: 48px;
-      height: 48px;
+        width: 48px;
+        height: 48px;
     }
-  }
+}
 	
   </style>
 <div class="flex flex-col w-full px-0 items-center h-full parent-container">
@@ -140,18 +141,18 @@
 	  </div>
 	  <div class="" bind:this={scrollToDiv} />
 	</div>
-	<form
-  class="input-area flex w-full rounded-md gap-4 bg-gray-900 p-4"
-  on:submit|preventDefault={() => handleSubmit()}
->
-  <button type="button" class="btn btn-accent" on:click={clearChat}>
-    <img src="./clear.png" alt="Clear Chat" />
-  </button>
-  <input type="text" class="input input-bordered flex-grow" bind:value={query} />
-  <button type="submit" class="btn btn-accent">
-    <img src="./send.png" alt="Send" />
-  </button>
+	<form class="input-area flex w-full rounded-md gap-4 bg-gray-900 p-4" on:submit|preventDefault={() => handleSubmit()}>
+    <button type="button" class="btn btn-accent" on:click={clearChat}>
+        <img src="./clear.png" alt="Clear Chat" />
+    </button>
+    <div class="relative flex-grow">
+        <input type="text" class="input input-bordered w-full pr-10" bind:value={query} />
+        <button type="submit" class="btn btn-accent absolute right-1 top-1/2 transform -translate-y-1/2">
+            <img src="./send.png" alt="Send" />
+        </button>
+    </div>
 </form>
+
 
   </div>
 </div>
