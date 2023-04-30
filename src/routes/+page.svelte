@@ -107,23 +107,28 @@
 	  padding: 0 env(safe-area-inset-left) 0 env(safe-area-inset-right); /* Add padding for the virtual keyboard on mobile devices */
 	}
 	
+        .btn img {
+         width: 50px;
+         height: 50px;
+        }
+	
   </style>
 <div class="flex flex-col w-full px-0 items-center h-full parent-container">
   <div class="flex flex-col w-full px-0 items-center h-full">
     <div class="chat-container w-full bg-gray-900 rounded-md p-4 overflow-y-auto flex flex-col gap-4">
       <!-- ... same as before -->
     </div>
-    <form
-      class="input-area flex w-full rounded-md gap-4 bg-gray-900 p-4"
-      on:submit|preventDefault={() => handleSubmit()}
-    >
-      <button type="button" class="btn btn-accent" on:click={clearChat}>
-        <img src="./clear.png" />
-      </button>
-      <input type="text" class="input input-bordered flex-grow" bind:value={query} />
-      <button type="submit" class="btn btn-accent">
-        <img src="./send.png" />
-      </button>
-    </form>
+   <form
+  class="input-area flex w-full rounded-md gap-4 bg-gray-900 p-4"
+  on:submit|preventDefault={() => handleSubmit()}
+>
+  <button type="button" class="btn btn-accent" on:click={clearChat}>
+    <img src="./clear.png" alt="Clear Chat" />
+  </button>
+  <input type="text" class="input input-bordered flex-grow" bind:value={query} />
+  <button type="submit" class="btn btn-accent">
+    <img src="./send.png" alt="Send" />
+  </button>
+</form>
   </div>
 </div>
