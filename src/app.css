@@ -7,6 +7,9 @@ html,
 body {
 	@apply h-full;
 }
+body, html, * {
+    background-color: transparent !important;
+}
 
 body {
 	@apply text-white;
