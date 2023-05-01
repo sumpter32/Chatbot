@@ -93,7 +93,7 @@
 <style>
 	.parent-container {
     height: 100vh;
-    background-color: transparent;
+    background-color: transparent !important;
 }
 	 
 	 .chat-container {
