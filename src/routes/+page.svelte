@@ -92,8 +92,9 @@
 
 <style>
 	.parent-container {
-      height: 100vh;
-     }
+    height: 100vh;
+    background-color: transparent;
+}
 	 
 	 .chat-container {
 	  height: calc(99vh - 3.5rem); /* Subtract the height of the input area */
