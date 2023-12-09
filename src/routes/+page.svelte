@@ -187,8 +187,7 @@
       <div class="" bind:this={scrollToDiv} />
     </div>
     <form class="input-area flex w-full rounded-md gap-4 bg-white p-4" on:submit|preventDefault={() => handleSubmit()}>
-      <button type="button" class="btn btn-accent" on:click={clearChat}>
-        <img src="./clear.png" alt="Clear Chat" />
+    
       </button>
       <button type="button" class="btn btn-accent" on:click={readOutLoud}>
         <img src="./audio.png" alt="Read Out Loud" />
