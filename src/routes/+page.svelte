@@ -3,13 +3,14 @@
   import ChatMessage from '$lib/components/ChatMessage.svelte'
   import type { ChatCompletionRequestMessage } from 'openai'
   import { SSE } from 'sse.js'
+  import { speakText } from '$lib/text-to-speech'
 
   function saveChatMessages() {
     if (typeof window !== 'undefined') {
       localStorage.setItem('chatMessages', JSON.stringify(chatMessages));
     }
   }
-	
+  
   function loadChatMessages() {
     if (typeof window !== 'undefined') {
       const loadedMessages = localStorage.getItem('chatMessages');
@@ -20,74 +21,79 @@
   }
   
   function clearChat() {
-	chatMessages = [];
-	saveChatMessages();
-}
+    chatMessages = [];
+    saveChatMessages();
+  }
 
-  let query: string = ''
-  let answer: string = ''
-  let loading: boolean = false
-  export let chatMessages: ChatCompletionRequestMessage[] = []
+  let query: string = '';
+  let answer: string = '';
+  let loading: boolean = false;
+  export let chatMessages: ChatCompletionRequestMessage[] = [];
 
-  let scrollToDiv: HTMLDivElement
+  let scrollToDiv: HTMLDivElement;
 
   function scrollToBottom() {
     setTimeout(function () {
-      scrollToDiv.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' })
-    }, 100)
+      scrollToDiv.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+    }, 100);
   }
+
+  const readOutLoud = async () => {
+    const allMessages = chatMessages.map(message => message.content).join(' ');
+    await speakText(allMessages);
+  };
 
   const handleSubmit = async () => {
     loading = true;
     chatMessages = [...chatMessages, { role: 'user', content: query }];
     saveChatMessages();
 
-		const eventSource = new SSE('/api/chat', {
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			payload: JSON.stringify({ messages: chatMessages })
-		})
+    const eventSource = new SSE('/api/chat', {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      payload: JSON.stringify({ messages: chatMessages })
+    });
 
-		query = ''
+    query = '';
 
-		eventSource.addEventListener('error', handleError)
+    eventSource.addEventListener('error', handleError);
 
-		eventSource.addEventListener('message', (e) => {
-			scrollToBottom()
-			try {
-				loading = false
-				if (e.data === '[DONE]') {
-					chatMessages = [...chatMessages, { role: 'assistant', content: answer }]
-					answer = ''
-					saveChatMessages() // Save messages after assistant response
-					return
-				}
+    eventSource.addEventListener('message', (e) => {
+      scrollToBottom();
+      try {
+        loading = false;
+        if (e.data === '[DONE]') {
+          chatMessages = [...chatMessages, { role: 'assistant', content: answer }];
+          answer = '';
+          saveChatMessages(); // Save messages after the assistant's response
+          return;
+        }
 
-				const completionResponse = JSON.parse(e.data)
-				const [{ delta }] = completionResponse.choices
+        const completionResponse = JSON.parse(e.data);
+        const [{ delta }] = completionResponse.choices;
 
-				if (delta.content) {
-					answer = (answer ?? '') + delta.content
-				}
-			} catch (err) {
-				handleError(err)
-			}
-		})
-		eventSource.stream()
-		scrollToBottom()
-  }
+        if (delta.content) {
+          answer = (answer ?? '') + delta.content;
+        }
+      } catch (err) {
+        handleError(err);
+      }
+    });
+    eventSource.stream();
+    scrollToBottom();
+  };
 
   function handleError<T>(err: T) {
-    loading = false
-    query = ''
-    answer = ''
-    console.error(err)
+    loading = false;
+    query = '';
+    answer = '';
+    console.error(err);
   }
 
   onMount(() => {
     chatMessages = loadChatMessages(); // load chat messages on mount
-  })
+  });
 </script>
 
 <style>
