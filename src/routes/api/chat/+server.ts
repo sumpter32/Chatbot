@@ -29,9 +29,11 @@ export const POST: RequestHandler = async ({ request }) => {
 
     let tokenCount = 0
 
+    // Calculate token count for each message and add sent indicator
     reqMessages.forEach((msg) => {
       const tokens = getTokens(msg.content)
       tokenCount += tokens
+      msg.sent = true; // Indicate that the message has been sent
     })
 
     const moderationRes = await fetch('https://api.openai.com/v1/moderations', {
@@ -60,9 +62,11 @@ export const POST: RequestHandler = async ({ request }) => {
       throw new Error('Query too large')
     }
 
+    // Add isTyping indicator for the assistant's message
     const messages: ChatCompletionRequestMessage[] = [
-      { role: 'system', content: prompt },
-      ...reqMessages
+      { role: 'system', content: prompt, isTyping: false },
+      ...reqMessages,
+      { role: 'assistant', content: '', isTyping: true } // Indicate that the assistant is typing
     ]
 
     const chatRequestOpts: CreateChatCompletionRequest = {
