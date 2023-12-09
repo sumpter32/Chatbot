@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import ChatMessage from '$lib/components/ChatMessage.svelte';
-  import type { ChatCompletionRequestMessage } from 'openai';
-  import { SSE } from 'sse.js';
-  import { speakText } from '$lib/text-to-speech';
+  import { onMount } from 'svelte'
+  import ChatMessage from '$lib/components/ChatMessage.svelte'
+  import type { ChatCompletionRequestMessage } from 'openai'
+  import { SSE } from 'sse.js'
+  import { speakText } from '$lib/text-to-speech'
 
   function saveChatMessages() {
     if (typeof window !== 'undefined') {
