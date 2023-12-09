@@ -5,9 +5,46 @@
 
 html,
 body {
-	@apply h-full;
+  @apply h-full;
+  background-color: #f8f8f8; /* Set the background color */
 }
 
 body {
-	@apply text-white;
+  @apply text-gray-800; /* Set the default text color to a dark gray */
 }
+
+/* Add the new styles for chat bubbles */
+.chat-bubble {
+  @apply p-4 rounded-lg shadow-md;
+  max-width: 70%;
+  margin-bottom: 10px;
+  word-wrap: break-word;
+}
+
+/* User Message Bubble */
+.chat-bubble-primary {
+  @apply bg-blue-500 text-white self-end;
+}
+
+/* Assistant Message Bubble */
+.chat-bubble-secondary {
+  @apply bg-red-500 text-white self-start;
+}
+
+/* System Message Bubble */
+.chat-bubble-system {
+  @apply bg-green-500 text-white text-center italic;
+  font-size: 0.9em;
+}
+/* Add these styles for the user input area */
+.input-area {
+	@apply bg-gray-200 p-4 rounded-md;
+  }
+  
+  .input {
+	@apply w-full p-2 border border-gray-300 rounded-md;
+  }
+  
+  .btn-accent {
+	@apply p-2 bg-blue-500 text-white rounded-md cursor-pointer;
+  }
