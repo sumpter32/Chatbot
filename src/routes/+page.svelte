@@ -50,6 +50,11 @@
       payload: JSON.stringify({ messages: chatMessages })
     })
 
+    const readOutLoud = async () => {
+      const allMessages = chatMessages.map(message => message.content).join(' ');
+      await speakText(allMessages);
+    };
+    
     query = ''
 
     eventSource.addEventListener('error', handleError)
