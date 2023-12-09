@@ -1,9 +1,9 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import ChatMessage from '$lib/components/ChatMessage.svelte';
-  import type { ChatCompletionRequestMessage } from 'openai';
-  import { SSE } from 'sse.js';
-  import { speakText } from '$lib/text-to-speech';
+  import ChatMessage from '$lib/components/ChatMessage.svelte'
+  import type { ChatCompletionRequestMessage } from 'openai'
+  import { SSE } from 'sse.js'
+  import { speakText } from '$lib/text-to-speech'
 
   function saveChatMessages() {
     if (typeof window !== 'undefined') {
@@ -187,11 +187,20 @@
       <div class="" bind:this={scrollToDiv} />
     </div>
     <form class="input-area flex w-full rounded-md gap-4 bg-white p-4" on:submit|preventDefault={() => handleSubmit()}>
-    
+      <button type="button" class="btn btn-accent" on:click={clearChat}>
+        <img src="./clear.png" alt="Clear Chat" />
       </button>
       <button type="button" class="btn btn-accent" on:click={readOutLoud}>
         <img src="./audio.png" alt="Read Out Loud" />
       </button>
       <div class="relative flex-grow">
         <input type="text" class="input input-bordered w-full pr-10" bind:value={query} />
-        <button type="submit" class="btn btn-accent absolute right-1 top-1/2 transform -translate-y-1
+        <button type="submit" class="btn btn-accent absolute right-1 top-1/2 transform -translate-y-1/2">
+          <img src="./send.png" alt="Send" />
+      </button>
+  </div>
+</form>
+
+
+</div>
+</div>
