@@ -91,67 +91,110 @@
 </script>
 
 <style>
-	.parent-container {
+  /* Global styles */
+  html, body {
+    @apply h-full;
+    background-color: #f8f8f8; /* Set the background color */
+  }
+
+  body {
+    @apply text-gray-800; /* Set the default text color to a dark gray */
+  }
+
+  /* Chat bubble styles */
+  .chat-bubble {
+    @apply p-4 rounded-lg shadow-md;
+    max-width: 70%;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+  }
+
+  .chat-bubble-primary {
+    @apply bg-blue-500 text-white self-end;
+  }
+
+  .chat-bubble-secondary {
+    @apply bg-red-500 text-white self-start;
+  }
+
+  .chat-bubble-system {
+    @apply bg-green-500 text-white text-center italic;
+    font-size: 0.9em;
+  }
+
+  /* User input area styles */
+  .input-area {
+    @apply bg-white p-4 rounded-md; /* Change the background color to white */
+  }
+
+  .input {
+    @apply w-full p-2 bg-white border border-gray-300 rounded-md text-gray-800; /* Set the text color to a dark gray */
+  }
+
+  .btn-accent {
+    @apply p-2 bg-blue-500 text-white rounded-md cursor-pointer;
+  }
+
+  /* Component-specific styles */
+  .parent-container {
     height: 100vh;
     background-color: transparent !important;
-}
-	 
-	 .chat-container {
-	  height: calc(99vh - 3.5rem); /* Subtract the height of the input area */
-	  padding-bottom: env(safe-area-inset-bottom); /* Add padding for the virtual keyboard on mobile devices */
-	}
-	.input-area {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 0 env(safe-area-inset-left) 0 env(safe-area-inset-right);
-}
-.btn img {
+  }
+
+  .chat-container {
+    height: calc(99vh - 3.5rem); /* Subtract the height of the input area */
+    padding-bottom: env(safe-area-inset-bottom); /* Add padding for the virtual keyboard on mobile devices */
+  }
+
+  .btn {
+    padding: 5px;
+  }
+
+  .btn img {
     width: 24px;
     height: 24px;
-}
+  }
 
-@media (min-width: 768px) {
+  @media (min-width: 768px) {
     .btn img {
-        width: 48px;
-        height: 48px;
+      width: 48px;
+      height: 48px;
     }
-}
-
-/* Add this class to change the text color of the input box */
-.input-bordered {
-    color: black;
-}
+  }
 </style>
 
 <div class="flex flex-col w-full px-0 items-center h-full parent-container">
   <div class="flex flex-col w-full px-0 items-center h-full">
-	<div class="chat-container w-full transparent rounded-md p-4 overflow-y-auto flex flex-col gap-4">
-	  <div class="flex flex-col gap-2">
-		<ChatMessage type="assistant" message="Hello and welcome to Pet Pals Connect! I'm your friendly AI veterinary guide, here to help you navigate the world of pet health and wellness. Whether you're dealing with a specific issue or just have general questions about your furry friend's well-being, I'm all ears! Remember, though I aim to provide helpful insights, I'm not a substitute for professional veterinary care. For urgent or serious concerns, it's crucial to consult with a qualified vet. So, how can I assist you in keeping your pet pal in top shape today?" />
-		{#each chatMessages as message}
-		  <ChatMessage type={message.role} message={message.content} />
-		{/each}
-		{#if answer}
-		  <ChatMessage type="assistant" message={answer} />
-		{/if}
-		{#if loading}
-		  <ChatMessage type="assistant" message="Loading.." />
-		{/if}
-	  </div>
-	  <div class="" bind:this={scrollToDiv} />
-	</div>
-	<form class="input-area flex w-full rounded-md gap-4 bg-gray-900 p-4" on:submit|preventDefault={() => handleSubmit()}>
-    <button type="button" class="btn btn-accent" on:click={clearChat}>
+    <div class="chat-container w-full transparent rounded-md p-4 overflow-y-auto flex flex-col gap-4">
+      <div class="flex flex-col gap-2">
+        <ChatMessage type="assistant" message="Salutations, esteemed seeker of knowledge! I am Thales of Miletus, philosopher and seeker of the truths that weave through the fabric of existence. In this digital realm, I stand ready to engage in thoughtful discourse and share the wisdom of ancient times. Pose your inquiries, and together let us embark on a journey of contemplation and discovery. Remember, the river of knowledge flows endlessly, and I am here to guide you in its currents. What questions do you bring before the Oracle of Miletus?" />
+        {#each chatMessages as message}
+          <ChatMessage type={message.role} message={message.content} />
+        {/each}
+        {#if answer}
+          <ChatMessage type="assistant" message={answer} />
+        {/if}
+        {#if loading}
+          <ChatMessage type="assistant" message="Loading.." />
+        {/if}
+      </div>
+      <div class="" bind:this={scrollToDiv} />
+    </div>
+    <form class="input-area flex w-full rounded-md gap-4 bg-white p-4" on:submit|preventDefault={() => handleSubmit()}>
+      <button type="button" class="btn btn-accent" on:click={clearChat}>
         <img src="./clear.png" alt="Clear Chat" />
-    </button>
-    <div class="relative flex-grow">
+      </button>
+      <button type="button" class="btn btn-accent" on:click={readOutLoud}>
+        <img src="./audio.png" alt="Read Out Loud" />
+      </button>
+      <div class="relative flex-grow">
         <input type="text" class="input input-bordered w-full pr-10" bind:value={query} />
         <button type="submit" class="btn btn-accent absolute right-1 top-1/2 transform -translate-y-1/2">
-            <img src="./send.png" alt="Send" />
-        </button>
-    </div>
+          <img src="./send.png" alt="Send" />
+      </button>
+  </div>
 </form>
+
+
 </div>
 </div>
