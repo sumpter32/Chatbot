@@ -1,9 +1,9 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import ChatMessage from '$lib/components/ChatMessage.svelte'
-  import type { ChatCompletionRequestMessage } from 'openai'
-  import { SSE } from 'sse.js'
-  import { speakText } from '$lib/text-to-speech'
+  import ChatMessage from '$lib/components/ChatMessage.svelte';
+  import type { ChatCompletionRequestMessage } from 'openai';
+  import { SSE } from 'sse.js';
+  import { speakText } from '$lib/text-to-speech';
 
   function saveChatMessages() {
     if (typeof window !== 'undefined') {
@@ -197,10 +197,8 @@
         <input type="text" class="input input-bordered w-full pr-10" bind:value={query} />
         <button type="submit" class="btn btn-accent absolute right-1 top-1/2 transform -translate-y-1/2">
           <img src="./send.png" alt="Send" />
-      </button>
+        </button>
+      </div>
+    </form>
   </div>
-</form>
-
-
-</div>
 </div>
