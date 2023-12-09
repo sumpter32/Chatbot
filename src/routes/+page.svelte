@@ -184,6 +184,10 @@
       <button type="button" class="btn btn-accent" on:click={clearChat}>
         <img src="./clear.png" alt="Clear Chat" />
       </button>
+      <button type="button" class="btn btn-accent" on:click={readOutLoud}>
+        <img src="./audio.png" alt="Read Out Loud" />
+      </button>
+
       <div class="relative flex-grow">
         <input type="text" class="input input-bordered w-full pr-10" bind:value={query} />
         <button type="submit" class="btn btn-accent absolute right-1 top-1/2 transform -translate-y-1/2">

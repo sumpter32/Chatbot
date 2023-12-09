@@ -1,6 +1,7 @@
 import preprocess from "svelte-preprocess";
 import adapter from '@sveltejs/adapter-vercel';
 import { vitePreprocess } from '@sveltejs/kit/vite';
+import { speakText } from '$lib/text-to-speech';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
