@@ -180,7 +180,7 @@
       </div>
       <div class="" bind:this={scrollToDiv} />
     </div>
-    <form class="input-area flex w-full rounded-md gap-4 bg-gray-900 p-4" on:submit|preventDefault={() => handleSubmit()}>
+    <form class="input-area flex w-full rounded-md gap-4 bg-white p-4" on:submit|preventDefault={() => handleSubmit()}>
       <button type="button" class="btn btn-accent" on:click={clearChat}>
         <img src="./clear.png" alt="Clear Chat" />
       </button>
