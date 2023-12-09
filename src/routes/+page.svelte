@@ -1,8 +1,8 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import ChatMessage from '$lib/components/ChatMessage.svelte'
-  import type { ChatCompletionRequestMessage } from 'openai'
-  import { SSE } from 'sse.js'
+  import ChatMessage from '$lib/components/ChatMessage.svelte';
+  import type { ChatCompletionRequestMessage } from 'openai';
+  import { SSE } from 'sse.js';
   import { speakText } from '$lib/text-to-speech';
 
   function saveChatMessages() {
@@ -10,7 +10,7 @@
       localStorage.setItem('chatMessages', JSON.stringify(chatMessages));
     }
   }
-	
+  
   function loadChatMessages() {
     if (typeof window !== 'undefined') {
       const loadedMessages = localStorage.getItem('chatMessages');
@@ -25,18 +25,23 @@
     saveChatMessages();
   }
 
-  let query: string = ''
-  let answer: string = ''
-  let loading: boolean = false
-  export let chatMessages: ChatCompletionRequestMessage[] = []
+  let query: string = '';
+  let answer: string = '';
+  let loading: boolean = false;
+  export let chatMessages: ChatCompletionRequestMessage[] = [];
 
-  let scrollToDiv: HTMLDivElement
+  let scrollToDiv: HTMLDivElement;
 
   function scrollToBottom() {
     setTimeout(function () {
-      scrollToDiv.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' })
-    }, 100)
+      scrollToDiv.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+    }, 100);
   }
+
+  const readOutLoud = async () => {
+    const allMessages = chatMessages.map(message => message.content).join(' ');
+    await speakText(allMessages);
+  };
 
   const handleSubmit = async () => {
     loading = true;
@@ -48,52 +53,47 @@
         'Content-Type': 'application/json'
       },
       payload: JSON.stringify({ messages: chatMessages })
-    })
+    });
 
-    const readOutLoud = async () => {
-      const allMessages = chatMessages.map(message => message.content).join(' ');
-      await speakText(allMessages);
-    };
-    
-    query = ''
+    query = '';
 
-    eventSource.addEventListener('error', handleError)
+    eventSource.addEventListener('error', handleError);
 
     eventSource.addEventListener('message', (e) => {
-      scrollToBottom()
+      scrollToBottom();
       try {
-        loading = false
+        loading = false;
         if (e.data === '[DONE]') {
-          chatMessages = [...chatMessages, { role: 'assistant', content: answer }]
-          answer = ''
+          chatMessages = [...chatMessages, { role: 'assistant', content: answer }];
+          answer = '';
           saveChatMessages(); // Save messages after the assistant's response
-          return
+          return;
         }
 
-        const completionResponse = JSON.parse(e.data)
-        const [{ delta }] = completionResponse.choices
+        const completionResponse = JSON.parse(e.data);
+        const [{ delta }] = completionResponse.choices;
 
         if (delta.content) {
-          answer = (answer ?? '') + delta.content
+          answer = (answer ?? '') + delta.content;
         }
       } catch (err) {
-        handleError(err)
+        handleError(err);
       }
-    })
-    eventSource.stream()
-    scrollToBottom()
-  }
+    });
+    eventSource.stream();
+    scrollToBottom();
+  };
 
   function handleError<T>(err: T) {
-    loading = false
-    query = ''
-    answer = ''
-    console.error(err)
+    loading = false;
+    query = '';
+    answer = '';
+    console.error(err);
   }
 
   onMount(() => {
     chatMessages = loadChatMessages(); // load chat messages on mount
-  })
+  });
 </script>
 
 <style>
@@ -195,10 +195,4 @@
       </button>
       <div class="relative flex-grow">
         <input type="text" class="input input-bordered w-full pr-10" bind:value={query} />
-        <button type="submit" class="btn btn-accent absolute right-1 top-1/2 transform -translate-y-1/2">
-          <img src="./send.png" alt="Send" />
-        </button>
-      </div>
-    </form>
-  </div>
-</div>
+        <button type="submit" class="btn btn-accent absolute right-1 top-1/2 transform -translate-y-1
