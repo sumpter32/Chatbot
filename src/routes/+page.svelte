@@ -3,7 +3,6 @@
   import ChatMessage from '$lib/components/ChatMessage.svelte'
   import type { ChatCompletionRequestMessage } from 'openai'
   import { SSE } from 'sse.js'
-  import { speakText } from '$lib/text-to-speech'
 
   function saveChatMessages() {
     if (typeof window !== 'undefined') {
@@ -78,11 +77,7 @@
 		eventSource.stream()
 		scrollToBottom()
   }
-	const readOutLoud = async () => {
-      const allMessages = chatMessages.map(message => message.content).join(' ');
-       await speakText(allMessages);
-	};   
-  
+
   function handleError<T>(err: T) {
     loading = false
     query = ''
@@ -134,8 +129,8 @@
   <div class="flex flex-col w-full px-0 items-center h-full">
 	<div class="chat-container w-full transparent rounded-md p-4 overflow-y-auto flex flex-col gap-4">
 	  <div class="flex flex-col gap-2">
-        {#each chatMessages as message}
-		<ChatMessage type="assistant" message="Salutations, esteemed seeker of knowledge! I am Thales of Miletus, philosopher and seeker of the truths that weave through the fabric of existence. In this digital realm, I stand ready to engage in thoughtful discourse and share the wisdom of ancient times. Pose your inquiries, and together let us embark on a journey of contemplation and discovery. Remember, the river of knowledge flows endlessly, and I am here to guide you in its currents. What questions do you bring before the Oracle of Miletus?" />
+		<ChatMessage type="assistant" message="Hello and welcome to Pet Pals Connect! I'm your friendly AI veterinary guide, here to help you navigate the world of pet health and wellness. Whether you're dealing with a specific issue or just have general questions about your furry friend's well-being, I'm all ears! Remember, though I aim to provide helpful insights, I'm not a substitute for professional veterinary care. For urgent or serious concerns, it's crucial to consult with a qualified vet. So, how can I assist you in keeping your pet pal in top shape today?" />
+		{#each chatMessages as message}
 		  <ChatMessage type={message.role} message={message.content} />
 		{/each}
 		{#if answer}
@@ -151,9 +146,6 @@
     <button type="button" class="btn btn-accent" on:click={clearChat}>
         <img src="./clear.png" alt="Clear Chat" />
     </button>
-	<button type="button" class="btn btn-accent" on:click={readOutLoud}>
-        <img src="./audio.png" alt="Read Out Loud" />
-     </button>
     <div class="relative flex-grow">
         <input type="text" class="input input-bordered w-full pr-10" bind:value={query} />
         <button type="submit" class="btn btn-accent absolute right-1 top-1/2 transform -translate-y-1/2">
