@@ -1,17 +1,8 @@
-<!-- Add this button inside the form -->
-<button type="button" class="btn btn-accent" on:click={readOutLoud}>
-  <img src="./audio.png" alt="Read Out Loud" />
-</button>
-
-<!-- ... (existing code) -->
-
 <script lang="ts">
   import { onMount } from 'svelte';
   import ChatMessage from '$lib/components/ChatMessage.svelte'
   import type { ChatCompletionRequestMessage } from 'openai'
   import { SSE } from 'sse.js'
-
-  // Import the text-to-speech utility
   import { speakText } from '$lib/text-to-speech';
 
   function saveChatMessages() {
@@ -19,7 +10,7 @@
       localStorage.setItem('chatMessages', JSON.stringify(chatMessages));
     }
   }
-
+	
   function loadChatMessages() {
     if (typeof window !== 'undefined') {
       const loadedMessages = localStorage.getItem('chatMessages');
@@ -28,7 +19,7 @@
       return [];
     }
   }
-
+  
   function clearChat() {
     chatMessages = [];
     saveChatMessages();
@@ -70,7 +61,7 @@
         if (e.data === '[DONE]') {
           chatMessages = [...chatMessages, { role: 'assistant', content: answer }]
           answer = ''
-          saveChatMessages() // Save messages after assistant response
+          saveChatMessages(); // Save messages after the assistant's response
           return
         }
 
@@ -88,12 +79,6 @@
     scrollToBottom()
   }
 
-  // Function to read out loud all chat messages
-  const readOutLoud = async () => {
-    const allMessages = chatMessages.map(message => message.content).join(' ');
-    await speakText(allMessages);
-  };
-
   function handleError<T>(err: T) {
     loading = false
     query = ''
@@ -107,6 +92,51 @@
 </script>
 
 <style>
+  /* Global styles */
+  html, body {
+    @apply h-full;
+    background-color: #f8f8f8; /* Set the background color */
+  }
+
+  body {
+    @apply text-gray-800; /* Set the default text color to a dark gray */
+  }
+
+  /* Chat bubble styles */
+  .chat-bubble {
+    @apply p-4 rounded-lg shadow-md;
+    max-width: 70%;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+  }
+
+  .chat-bubble-primary {
+    @apply bg-blue-500 text-white self-end;
+  }
+
+  .chat-bubble-secondary {
+    @apply bg-red-500 text-white self-start;
+  }
+
+  .chat-bubble-system {
+    @apply bg-green-500 text-white text-center italic;
+    font-size: 0.9em;
+  }
+
+  /* User input area styles */
+  .input-area {
+    @apply bg-white p-4 rounded-md; /* Change the background color to white */
+  }
+
+  .input {
+    @apply w-full p-2 bg-white border border-gray-300 rounded-md text-gray-800; /* Set the text color to a dark gray */
+  }
+
+  .btn-accent {
+    @apply p-2 bg-blue-500 text-white rounded-md cursor-pointer;
+  }
+
+  /* Component-specific styles */
   .parent-container {
     height: 100vh;
     background-color: transparent !important;
@@ -115,14 +145,6 @@
   .chat-container {
     height: calc(99vh - 3.5rem); /* Subtract the height of the input area */
     padding-bottom: env(safe-area-inset-bottom); /* Add padding for the virtual keyboard on mobile devices */
-  }
-
-  .input-area {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 0 env(safe-area-inset-left) 0 env(safe-area-inset-right);
   }
 
   .btn {
@@ -141,6 +163,7 @@
     }
   }
 </style>
+
 <div class="flex flex-col w-full px-0 items-center h-full parent-container">
   <div class="flex flex-col w-full px-0 items-center h-full">
     <div class="chat-container w-full transparent rounded-md p-4 overflow-y-auto flex flex-col gap-4">
@@ -158,7 +181,7 @@
       </div>
       <div class="" bind:this={scrollToDiv} />
     </div>
-    <form class="input-area flex w-full rounded-md gap-4 bg-gray-900 p-4" on:submit|preventDefault={() => handleSubmit()}>
+    <form class="input-area flex w-full rounded-md gap-4 bg-white p-4" on:submit|preventDefault={() => handleSubmit()}>
       <button type="button" class="btn btn-accent" on:click={clearChat}>
         <img src="./clear.png" alt="Clear Chat" />
       </button>
