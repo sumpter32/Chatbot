@@ -128,7 +128,7 @@
   }
 
   .input {
-    @apply w-full p-2 border border-gray-300 rounded-md text-gray-800; /* Set the text color to a dark gray */
+    @apply w-full p-2 bg-white border border-gray-300 rounded-md text-gray-800; /* Set the text color to a dark gray */
   }
 
   .btn-accent {
