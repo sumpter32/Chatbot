@@ -39,8 +39,14 @@
   }
 
   const readOutLoud = async () => {
-    const allMessages = chatMessages.map(message => message.content).join(' ');
-    await speakText(allMessages);
+    const lastAssistantMessage = chatMessages
+      .filter(message => message.role === 'assistant')
+      .map(message => message.content)
+      .pop(); // Get the last assistant message
+
+    if (lastAssistantMessage) {
+      await speakText(lastAssistantMessage);
+    }
   };
 
   const handleSubmit = async () => {
