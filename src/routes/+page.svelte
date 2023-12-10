@@ -206,12 +206,12 @@
       <button type="button" class="btn btn-accent" on:click={clearChat}>
         <img src="./clear.png" alt="Clear Chat" />
       </button>
-      <div class="header-title">Your ChatBot Name</div>
+      <div class="header-title">The Great George Carlin</div>
       <button type="button" class="btn btn-accent" on:click={readOutLoud}>
         <img src="./audio.png" alt="Read Out Loud" />
       </button>
       <button type="button" class="btn btn-accent" on:click={shareChat}>
-        Share
+        <img src="./share.png" alt="Share" />
       </button>
     </div>
   </div>
@@ -220,7 +220,7 @@
   <div class="main-chat-area">
     <div class="chat-container w-full transparent rounded-md p-4 overflow-y-auto flex flex-col gap-4">
       <div class="flex flex-col gap-2">
-        <ChatMessage type="assistant" message="Salutations, esteemed seeker of knowledge! I am Thales of Miletus, philosopher and seeker of the truths that weave through the fabric of existence. In this digital realm, I stand ready to engage in thoughtful discourse and share the wisdom of ancient times. Pose your inquiries, and together let us embark on a journey of contemplation and discovery. Remember, the river of knowledge flows endlessly, and I am here to guide you in its currents. What questions do you bring before the Oracle of Miletus?" />
+        <ChatMessage type="assistant" message="What do you want!" />
         {#each chatMessages as message}
           <ChatMessage type={message.role} message={message.content} />
         {/each}
