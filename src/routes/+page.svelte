@@ -49,6 +49,11 @@
     }
   };
 
+  const shareChat = () => {
+    // Add your logic for sharing the chat
+    console.log('Sharing chat...');
+  };
+
   const handleSubmit = async () => {
     loading = true;
     chatMessages = [...chatMessages, { role: 'user', content: query }];
@@ -167,16 +172,52 @@
     height: 24px;
   }
 
-  @media (min-width: 768px) {
-    .btn img {
-      width: 48px;
-      height: 48px;
-    }
+  /* New styles for the static header */
+  .header {
+    @apply bg-white p-4 rounded-md shadow-md;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .header-buttons {
+    display: flex;
+    gap: 8px;
+  }
+
+  .header-title {
+    @apply font-semibold text-lg;
+  }
+
+  /* Adjust margin for the main chat area */
+  .main-chat-area {
+    @apply mt-16; /* Adjust the margin to make space for the header */
   }
 </style>
 
 <div class="flex flex-col w-full px-0 items-center h-full parent-container">
-  <div class="flex flex-col w-full px-0 items-center h-full">
+  <!-- Static header with clear, read out loud, and share buttons -->
+  <div class="header">
+    <div class="header-buttons">
+      <button type="button" class="btn btn-accent" on:click={clearChat}>
+        <img src="./clear.png" alt="Clear Chat" />
+      </button>
+      <div class="header-title">Your ChatBot Name</div>
+      <button type="button" class="btn btn-accent" on:click={readOutLoud}>
+        <img src="./audio.png" alt="Read Out Loud" />
+      </button>
+      <button type="button" class="btn btn-accent" on:click={shareChat}>
+        Share
+      </button>
+    </div>
+  </div>
+
+  <!-- Main chat area -->
+  <div class="main-chat-area">
     <div class="chat-container w-full transparent rounded-md p-4 overflow-y-auto flex flex-col gap-4">
       <div class="flex flex-col gap-2">
         <ChatMessage type="assistant" message="Salutations, esteemed seeker of knowledge! I am Thales of Miletus, philosopher and seeker of the truths that weave through the fabric of existence. In this digital realm, I stand ready to engage in thoughtful discourse and share the wisdom of ancient times. Pose your inquiries, and together let us embark on a journey of contemplation and discovery. Remember, the river of knowledge flows endlessly, and I am here to guide you in its currents. What questions do you bring before the Oracle of Miletus?" />
@@ -192,21 +233,15 @@
       </div>
       <div class="" bind:this={scrollToDiv} />
     </div>
+
+    <!-- Input area -->
     <form class="input-area flex w-full rounded-md gap-4 bg-white p-4" on:submit|preventDefault={() => handleSubmit()}>
-      <button type="button" class="btn btn-accent" on:click={clearChat}>
-        <img src="./clear.png" alt="Clear Chat" />
-      </button>
-      <button type="button" class="btn btn-accent" on:click={readOutLoud}>
-        <img src="./audio.png" alt="Read Out Loud" />
-      </button>
       <div class="relative flex-grow">
         <input type="text" class="input input-bordered w-full pr-10" bind:value={query} />
         <button type="submit" class="btn btn-accent absolute right-1 top-1/2 transform -translate-y-1/2">
           <img src="./send.png" alt="Send" />
-      </button>
+        </button>
+      </div>
+    </form>
   </div>
-</form>
-
-
-</div>
 </div>
