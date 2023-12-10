@@ -211,7 +211,7 @@
         <img src="./audio.png" alt="Read Out Loud" />
       </button>
       <button type="button" class="btn btn-accent" on:click={shareChat}>
-        Share
+        <img src="./sare.png" alt="Share" />
       </button>
     </div>
   </div>
